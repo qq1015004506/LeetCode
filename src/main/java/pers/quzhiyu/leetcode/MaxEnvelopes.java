@@ -1,54 +1,57 @@
 package pers.quzhiyu.leetcode;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
+/**
+ *
+ * 354. 俄罗斯套娃信封问题
+ * 给定一些标记了宽度和高度的信封，宽度和高度以整数对形式 (w, h) 出现。当另一个信封的宽度和高度都比这个信封大的时候，这个信封就可以放进另一个信封里，如同俄罗斯套娃一样。
+ *
+ * 请计算最多能有多少个信封能组成一组“俄罗斯套娃”信封（即可以把一个信封放到另一个信封里面）。
+ *
+ * 说明:
+ * 不允许旋转信封。
+ *
+ * 示例:
+ *
+ * 输入: envelopes = [[5,4],[6,4],[6,7],[2,3]]
+ * 输出: 3
+ * 解释: 最多信封的个数为 3, 组合为: [2,3] => [5,4] => [6,7]。
+ *
+ */
 public class MaxEnvelopes {
-    int[] flags;
-    public int maxEnvelopes(int[][] envelopes) {
-        int result = 0;
-        int n = envelopes.length;
-        if(n == 0) {
-            return 0;
+
+    public int lengthOfLIS(int[] nums) {
+        int[] dp = new int[nums.length];
+        int len = 0;
+        for (int num : nums) {
+            int i = Arrays.binarySearch(dp, 0, len, num);
+            if (i < 0) {
+                i = -(i + 1);
+            }
+            dp[i] = num;
+            if (i == len) {
+                len++;
+            }
         }
-        int[][] helper = new int[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if(comp(envelopes[i],envelopes[j])) {
-                    helper[i][j] = 1;
+        return len;
+    }
+
+    public int maxEnvelopes(int[][] envelopes) {
+        // sort on increasing in first dimension and decreasing in second
+        Arrays.sort(envelopes, new Comparator<int[]>() {
+            public int compare(int[] arr1, int[] arr2) {
+                if (arr1[0] == arr2[0]) {
+                    return arr2[1] - arr1[1];
+                } else {
+                    return arr1[0] - arr2[0];
                 }
             }
-        }
-
-        int[] contains = new int[n];
-        for (int i = 0; i < n; i++) {
-            count(helper,contains,i);
-        }
-        for (int i = 0; i < contains.length; i++) {
-            result = Math.max(result,contains[i]);
-        }
-        return result == 0 ? 1 : result;
-    }
-
-    private int count(int[][] helper, int[] contains, int index) {
-        if(contains[index] != 0)
-            return contains[index];
-        int[] row = helper[index];
-        for (int i = 0; i < row.length; i++) {
-            if (row[i] != 0) {
-                contains[index] = Math.max(count(helper, contains, i) + 1, contains[index]);
-            }
-        }
-        return contains[index] == 0 ? 1 : contains[index];
-    }
-
-    private boolean comp(int[] envelope1, int[] envelope2) {
-        if(envelope1[0] > envelope2[0] && envelope1[1] > envelope2[1]) {
-            return true;
-        }
-        return false;
-    }
-
-    public static void main(String[] args) {
-        int[][] ints = {{5, 4}, {1, 1}, {6, 7}, {2, 3}};
-        int i = new MaxEnvelopes().maxEnvelopes(ints);
-        System.out.println(i);
+        });
+        // extract the second dimension and run LIS
+        int[] secondDim = new int[envelopes.length];
+        for (int i = 0; i < envelopes.length; ++i) secondDim[i] = envelopes[i][1];
+        return lengthOfLIS(secondDim);
     }
 }
