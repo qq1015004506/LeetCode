@@ -1,4 +1,4 @@
-package pers.quzhiyu.algorithm.datastructure;
+package pers.quzhiyu.dataStructure;
 
 public class TreeNode {
     public int val;
