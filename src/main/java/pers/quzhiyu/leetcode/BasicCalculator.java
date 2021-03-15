@@ -55,7 +55,10 @@ public class BasicCalculator {
 
 
     public static void main(String[] args) {
-        int calculate = new BasicCalculator().calculate("(1+(4+5+2)-3)+(6+8)");
-        System.out.println(calculate);
+
+        double result = Math.sin(0.00000001)/0.00000001;
+        System.out.println(result);
+//        int calculate = new BasicCalculator().calculate("(1+(4+5+2)-3)+(6+8)");
+//        System.out.println(calculate);
     }
 }
