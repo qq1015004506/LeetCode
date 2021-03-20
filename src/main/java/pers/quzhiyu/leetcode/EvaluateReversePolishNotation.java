@@ -6,32 +6,32 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 public class EvaluateReversePolishNotation {
     public int evalRPN(String[] tokens) {
-        Deque<String> deque = new LinkedList<>();
+        Deque<Integer> deque = new LinkedList<>();
         for (int i = 0; i < tokens.length; i++) {
             int a = 0, b = 0;
             switch (tokens[i]) {
                 case "+":
-                    a = Integer.valueOf(deque.pollFirst());
-                    b = Integer.valueOf(deque.pollFirst());
-                    deque.addFirst(String.valueOf(a + b));
+                    a = deque.pollFirst();
+                    b = deque.pollFirst();
+                    deque.addFirst(a + b);
                     break;
                 case "-":
-                    a = Integer.valueOf(deque.pollFirst());
-                    b = Integer.valueOf(deque.pollFirst());
-                    deque.addFirst(String.valueOf(b - a));
+                    a = deque.pollFirst();
+                    b = deque.pollFirst();
+                    deque.addFirst(b - a);
                     break;
                 case "*":
-                    a = Integer.valueOf(deque.pollFirst());
-                    b = Integer.valueOf(deque.pollFirst());
-                    deque.addFirst(String.valueOf(b * a));
+                    a = deque.pollFirst();
+                    b = deque.pollFirst();
+                    deque.addFirst(a * b);
                     break;
                 case "/":
-                    a = Integer.valueOf(deque.pollFirst());
-                    b = Integer.valueOf(deque.pollFirst());
-                    deque.addFirst(String.valueOf(b / a));
+                    a = deque.pollFirst();
+                    b = deque.pollFirst();
+                    deque.addFirst(b / a);
                     break;
                 default:
-                    deque.addFirst(tokens[i]);
+                    deque.addFirst(Integer.valueOf(tokens[i]));
                     break;
             }
         }
