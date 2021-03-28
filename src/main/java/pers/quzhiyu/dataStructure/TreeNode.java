@@ -1,5 +1,6 @@
 package pers.quzhiyu.dataStructure;
 
+// tree node
 public class TreeNode {
     public int val;
     public TreeNode left;
