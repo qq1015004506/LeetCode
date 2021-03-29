@@ -1,27 +1,27 @@
 package pers.quzhiyu.leetcode;
 
-import java.util.Deque;
-import java.util.LinkedList;
+import java.util.Arrays;
 
 public class OneThreeTwoPattern {
     public boolean find132pattern(int[] nums) {
-        int n = nums.length;
-        Deque<Integer> candidateK = new LinkedList<Integer>();
-        candidateK.push(nums[n - 1]);
-        int maxK = Integer.MIN_VALUE;
-
-        for (int i = n - 2; i >= 0; --i) {
-            if (nums[i] < maxK) {
-                return true;
-            }
-            while (!candidateK.isEmpty() && nums[i] > candidateK.peek()) {
-                maxK = candidateK.pop();
-            }
-            if (nums[i] > maxK) {
-                candidateK.push(nums[i]);
+        for (int i = 1; i < nums.length; i++) {
+            int n = nums[i];
+            for (int j = i + 1; j < nums.length; j++) {
+                if(n > nums[j]) {
+                    int m = nums[j];
+                    for (int k = i-1; k >= 0; k--) {
+                        if(m > nums[k]) {
+                            return true;
+                        }
+                    }
+                }
             }
         }
-
         return false;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {-1,3,2,0};
+        new OneThreeTwoPattern().find132pattern(arr);
     }
 }
