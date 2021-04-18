@@ -5,6 +5,7 @@ import pers.quzhiyu.dataStructure.TreeNode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 public class MinimumDistanceBetweenBstNodes {
     List<Integer> arr = new ArrayList<>();
@@ -26,5 +27,18 @@ public class MinimumDistanceBetweenBstNodes {
         arr.add(root.val);
         helper(root.left);
         helper(root.right);
+    }
+
+    public static void main(String[] args) {
+        int n = 5;
+        int[][] arr = new int[n][];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = new int[i+1];
+        }
+
+        for (int i = 0; i < arr.length; i++) {
+            System.out.println(arr[i].length);
+        }
+
     }
 }
