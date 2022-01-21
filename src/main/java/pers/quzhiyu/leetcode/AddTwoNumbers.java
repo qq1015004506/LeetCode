@@ -7,70 +7,30 @@ import java.util.Deque;
 
 public class AddTwoNumbers {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        Deque<Integer> deque1 = new ArrayDeque<>();
-        Deque<Integer> deque2 = new ArrayDeque<>();
-        ListNode head1 = l1,head2 = l2 ;
-        while (head1 != null ) {
-            deque1.push(head1.val);
-            head1 = head1.next;
-        }
-        while (head2 != null) {
-            deque2.push(head2.val);
-            head2 = head2.next;
-        }
-        boolean flag = false;
-        ListNode result = new ListNode(0);
-        ListNode it = result;
-        while (!deque1.isEmpty() && !deque2.isEmpty()) {
-            int num1 = deque1.removeLast();
-            int num2 = deque2.removeLast();
-            int num = num1 + num2;
-            if(flag) {
-                num = num + 1;
-                flag = false;
+        ListNode head = null, tail = null;
+        int carry = 0;
+        while (l1 != null || l2 != null) {
+            int n1 = l1 != null ? l1.val : 0;
+            int n2 = l2 != null ? l2.val : 0;
+            int sum = n1 + n2 + carry;
+            if (head == null) {
+                head = tail = new ListNode(sum % 10);
+            } else {
+                tail.next = new ListNode(sum % 10);
+                tail = tail.next;
             }
-            if(num >= 10) {
-                flag = true;
-                num = num % 10;
+            carry = sum / 10;
+            if (l1 != null) {
+                l1 = l1.next;
             }
-            ListNode listNode = new ListNode(num);
-            it.next = listNode;
-            it = it.next;
+            if (l2 != null) {
+                l2 = l2.next;
+            }
         }
-        while (!deque1.isEmpty()) {
-            int num = deque1.removeLast();
-            if(flag) {
-                num = num + 1;
-                flag = false;
-            }
-            if(num >= 10) {
-                flag = true;
-                num = num % 10;
-            }
-            ListNode listNode = new ListNode(num);
-            it.next = listNode;
-            it = it.next;
+        if (carry > 0) {
+            tail.next = new ListNode(carry);
         }
-        while (!deque2.isEmpty()) {
-            int num = deque2.removeLast();
-            if(flag) {
-                num = num + 1;
-                flag = false;
-            }
-            if(num >= 10) {
-                flag = true;
-                num = num % 10;
-            }
-            ListNode listNode = new ListNode(num);
-            it.next = listNode;
-            it = it.next;
-        }
-        if(flag) {
-            ListNode listNode = new ListNode(1);
-            it.next = listNode;
-        }
-
-        return result.next;
+        return head;
     }
 
     public static void main(String[] args) {
