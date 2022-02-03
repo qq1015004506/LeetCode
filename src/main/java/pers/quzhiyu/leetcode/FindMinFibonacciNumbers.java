@@ -1,5 +1,8 @@
 package pers.quzhiyu.leetcode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FindMinFibonacciNumbers {
     public int findMinFibonacciNumbers(int k) {
         List<Integer> f = new ArrayList<Integer>();
